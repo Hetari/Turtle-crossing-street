@@ -9,4 +9,4 @@ I wrote this code when I'm following [100 Days of Code: The Complete Python Pro 
 - Open the `main.py` file in any code editor.
 - Enjoy...
 ##### Or
-- Download the exe file from here.
+- Download the exe file on [telegram](https://t.me/E_1_E_all/4).
