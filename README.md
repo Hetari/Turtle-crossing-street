@@ -8,5 +8,5 @@ I wrote this code when I'm following [100 Days of Code: The Complete Python Pro 
 - Download all files.
 - Open the `main.py` file in any code editor.
 - Enjoy...
-#####Or
+###Or
 - Download the exe file from here.
