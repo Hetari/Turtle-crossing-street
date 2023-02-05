@@ -14,3 +14,12 @@ class Scoreboard(Turtle):
         self.clear()
         self.goto(pos)
         self.write(f"{text}", align='center', font=FONT, move=True)
+
+    def timing(self, text: str, pos: tuple):
+        # self.clear()
+        self.goto(pos)
+        self.write(f"{text}", align='center', font=FONT, move=True)
+
+    def game_over(self, pos: tuple):
+        self.goto(pos)
+        self.write("Game Over...", align='center', font=FONT, move=True)
