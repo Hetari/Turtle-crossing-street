@@ -3,6 +3,7 @@ from turtle import Screen
 from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
+import time
 
 
 def main():
@@ -22,19 +23,27 @@ def main():
 
     # This is a while loop that is checking if the game is on. If it is, it will update the screen, create
     game_is_on = True
+    start_time = time.time()
     while game_is_on:
+        end_time = time.time()
         screen.update()
+        time.sleep(float(0.1))
         level.update(f'Level {player.level}', (-240, 260))
 
+        # timing.timer(mint)
+        timing = end_time - start_time
+        level.timing('{:.1f}'.format(timing), (240, 260))
         # a car, move the car, check if the player is winning.
         cars.create_car()
         cars.move()
-        player.winning(player.level)
+        if player.is_finish_laine():
+            player.go_to_start()
+            cars.level_up()
 
         # Check if the player is colliding with a car. If the player is colliding with a car, the game will end.
         for car in cars.cars:
             if car.distance(player) < 20:
-                game_over = Scoreboard('Game Over...', 'center', (0, 0))
+                level.game_over((0, 0))
                 game_is_on = False
 
     # Allowing the user to click on the screen to exit the game.
@@ -45,7 +54,12 @@ if __name__ == '__main__':
     # noinspection PyBroadException
     try:
         main()
-    except Exception as _:
+
+    except KeyboardInterrupt:
         pass
+
+    # except Exception:
+    #     pass
+
     finally:
         print("Exit...")
