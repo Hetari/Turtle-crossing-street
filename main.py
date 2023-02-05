@@ -58,8 +58,8 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
 
-    # except Exception:
-    #     pass
+    except Exception:
+        pass
 
     finally:
         print("Exit...")
