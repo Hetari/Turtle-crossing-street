@@ -1,4 +1,5 @@
 from turtle import Turtle
+from player import Player
 import random
 
 
@@ -11,9 +12,10 @@ class CarManager:
     def __init__(self):
         self.cars = []
         self.create_car()
+        self.car_speed = STARTING_MOVE_DISTANCE
 
     def create_car(self):
-        chance = random.randint(1, 6)
+        chance = random.randint(0, 2)
         if chance == 1:
             new = Turtle()
             new.penup()
@@ -26,6 +28,9 @@ class CarManager:
 
     def move(self):
         for i in self.cars:
-            i.forward(STARTING_MOVE_DISTANCE)
+            i.forward(self.car_speed)
             if i.xcor() < -280:
                 del i
+
+    def level_up(self):
+        self.car_speed += MOVE_INCREMENT
