@@ -1,4 +1,4 @@
-# Importing the classes from the other files.
+# Import required modules and classes
 from turtle import Screen
 from player import Player
 from car_manager import CarManager
@@ -7,59 +7,68 @@ import time
 
 
 def main():
-    # Setting up the screen.
+    """
+    The main function to set up the game environment, control game flow, and handle user interactions.
+    It creates instances of Player, CarManager, and Scoreboard, handles screen events, and runs the game loop.
+    """
+    # Setting up the game window
     screen = Screen()
-    screen.setup(width=600, height=600)
-    screen.tracer(0)
+    screen.setup(width=600, height=600)  # Set screen dimensions
+    screen.tracer(0)  # Disable automatic screen updates for smoother animations
 
-    # Creating an instance of the Player, CarManager, and Scoreboard classes.
-    cars = CarManager()
-    player = Player()
+    # Create instances of CarManager, Player, and Scoreboard
+    cars = CarManager()  # Manages the cars in the game
+    player = Player()  # Controls the player's turtle
+    level = Scoreboard(f'Level {player.level}', 'center', (-240, 260))  # Display the current level on the screen
 
-    # Listening for the user to press the up arrow key only.
-    screen.listen()
-    screen.onkeypress(player.up, 'Up')
-    level = Scoreboard(f'Level {player.level}', 'center', (-240, 260))
+    # Set up keyboard controls
+    screen.listen()  # Start listening for keyboard inputs
+    screen.onkeypress(player.up, 'Up')  # Move the player upward when the up arrow is pressed
 
-    # This is a while loop that is checking if the game is on. If it is, it will update the screen, create
-    game_is_on = True
-    start_time = time.time()
+    # Game state variables
+    game_is_on = True  # Boolean to track if the game is running
+    start_time = time.time()  # Start the game timer
+
+    # Main game loop
     while game_is_on:
-        end_time = time.time()
-        screen.update()
-        time.sleep(float(0.1))
-        level.update(f'Level {player.level}', (-240, 260))
+        end_time = time.time()  # Track the current time
+        screen.update()  # Manually update the screen
+        time.sleep(0.1)  # Pause the loop briefly to control the speed of the game
 
-        # timing.timer(mint)
-        timing = end_time - start_time
-        level.timing('{:.1f}'.format(timing), (240, 260))
-        # a car, move the car, check if the player is winning.
-        cars.create_car()
-        cars.move()
-        if player.is_finish_laine():
-            player.go_to_start()
-            cars.level_up()
+        # Update the level display and timing
+        level.update(f'Level {player.level}', (-240, 260))  # Update the current level display
+        timing = end_time - start_time  # Calculate the elapsed time
+        level.timing(f'{timing:.1f}', (240, 260))  # Display the timer on the screen
 
-        # Check if the player is colliding with a car. If the player is colliding with a car, the game will end.
+        # Create and move cars
+        cars.create_car()  # Randomly create new cars
+        cars.move()  # Move the cars across the screen
+
+        # Check if the player has reached the finish line and proceed to the next level
+        if player.is_finish_line():
+            player.go_to_start()  # Reset player to the starting position
+            cars.level_up()  # Increase car speed as the game progresses
+
+        # Detect collision between the player and cars
         for car in cars.cars:
-            if car.distance(player) < 20:
-                level.game_over((0, 0))
-                game_is_on = False
+            if car.distance(player) < 20:  # Check if the player is too close to a car
+                level.game_over((0, 0))  # Display the "Game Over" message
+                game_is_on = False  # End the game
 
-    # Allowing the user to click on the screen to exit the game.
+    # Exit the game when the user clicks on the screen
     screen.exitonclick()
 
 
 if __name__ == '__main__':
-    # noinspection PyBroadException
+    # Main program execution with exception handling for interruptions or other issues
     try:
         main()
 
     except KeyboardInterrupt:
-        pass
+        pass  # Handle keyboard interruption (Ctrl+C)
 
     except Exception:
-        pass
+        pass  # Handle any other exceptions
 
     finally:
-        print("Exit...")
+        print("Exit...")  # Print exit message when the game ends
